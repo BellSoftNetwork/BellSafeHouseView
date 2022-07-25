@@ -1,0 +1,36 @@
+include:
+  - local: /.gitlab/ci/jobs/templates/node.gitlab-ci.yaml
+  - local: /.gitlab/ci/jobs/templates/docker.gitlab-ci.yaml
+
+.build:
+  stage: build
+#  needs:
+#    - test
+  rules:
+    - if: "$TEST_DISABLED || $BUILD_DISABLED"
+      when: never
+    - if: "$CI_COMMIT_REF_PROTECTED"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && "$CI_MERGE_REQUEST_TARGET_BRANCH_PROTECTED"
+    - if: "$CI_COMMIT_REF_NAME"
+      when: manual
+
+build_boot_image:
+  image: docker
+  extends:
+    - .build
+    - .docker
+  variables:
+    APPLICATION_IMAGE_URL: "${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}"
+    BUILD_STAGE_IMAGE_TAG_URL: "${CI_REGISTRY_IMAGE}/build-stage:${CI_COMMIT_SHA}"
+    DOCKER_BUILD_DOCKERFILE_ARGS: "-f Dockerfile.production"
+    DOCKER_BUILD_CACHE_ARGS: "--cache-from ${APPLICATION_IMAGE_URL}:${CI_COMMIT_SHA} --cache-from ${BUILD_STAGE_IMAGE_TAG_URL}"
+    DOCKER_BUILD_TAG_ARGS: "-t ${APPLICATION_IMAGE_URL}:latest -t ${APPLICATION_IMAGE_URL}:${CI_COMMIT_SHA}"
+  script:
+    # Build Stage
+    - docker pull ${BUILD_STAGE_IMAGE_TAG_URL} || true
+    - docker build ${DOCKER_BUILD_DOCKERFILE_ARGS} --target build-stage --cache-from ${BUILD_STAGE_IMAGE_TAG_URL} --tag ${BUILD_STAGE_IMAGE_TAG_URL} .
+    - docker push ${BUILD_STAGE_IMAGE_TAG_URL}
+    # Build application
+    - docker pull ${APPLICATION_IMAGE_URL}:${CI_COMMIT_SHA} || true
+    - docker build ${DOCKER_BUILD_DOCKERFILE_ARGS} ${DOCKER_BUILD_CACHE_ARGS} ${DOCKER_BUILD_TAG_ARGS} .
+    - docker push -a ${APPLICATION_IMAGE_URL}
