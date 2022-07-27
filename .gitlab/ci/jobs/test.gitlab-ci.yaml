@@ -21,6 +21,7 @@ test:
     - .node_yarn_cache
   script:
     - yarn lint
+    - yarn test
 
 code_quality:
   extends:
