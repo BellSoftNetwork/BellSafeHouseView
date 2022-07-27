@@ -1,5 +1,8 @@
 ###
 # Place your Prettier ignore content here
+.gitlab*
+.kubernetes
+kubernetes
 
 ###
 # .gitignore content is duplicated here due to https://github.com/prettier/prettier/issues/8506

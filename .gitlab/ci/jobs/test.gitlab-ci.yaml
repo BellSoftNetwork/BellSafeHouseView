@@ -1,0 +1,31 @@
+include:
+  - local: /.gitlab/ci/jobs/templates/default.gitlab-ci.yaml
+  - local: /.gitlab/ci/jobs/templates/node.gitlab-ci.yaml
+  - template: Code-Quality.gitlab-ci.yml # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Jobs/Code-Quality.gitlab-ci.yml
+
+.test_rules:
+  rules:
+    - if: "$TEST_DISABLED"
+      when: never
+    - if: "$CI"
+
+.test:
+  extends:
+    - .node
+    - .test_rules
+  stage: test
+
+test:
+  extends:
+    - .test
+    - .node_yarn_cache
+  script:
+    - yarn lint
+
+code_quality:
+  extends:
+    - default
+  rules:
+    - if: $CODE_QUALITY_DISABLED
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"

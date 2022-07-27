@@ -3,7 +3,7 @@
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:${NODE_VERSION}
 
 # Offline mirror 를 구성하여 다운로드 받을 때 네트워크를 타지 않음
-.node_cache:
+.node_yarn_cache:
   extends:
     - .node
   variables:
@@ -11,6 +11,7 @@
   before_script:
     - echo 'yarn-offline-mirror "${YARN_CACHE_DIR}"' >> .yarnrc
     - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
+    - yarn install --frozen-lockfile --no-progress
   cache:
     key:
       files:
