@@ -1,68 +1,52 @@
-# bell-safe-house-view
+# Bell Safe House View
+안전한 집을 위한 플랫폼 프론트엔드
 
-## Build Setup
-
+## 프로젝트 환경설정
+### 필수 설정 구성
+1. yarn 의존성 설치
 ```bash
-# install dependencies
-$ yarn install
-
-# serve with hot reload at localhost:3000
-$ yarn dev
-
-# build for production and launch server
-$ yarn build
-$ yarn start
-
-# generate static project
-$ yarn generate
+yarn install
 ```
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
-## Special Directories
+### IntelliJ 필수 플러그인 설치
+- `Prettier`
+  이외 추가 플러그인은 팀 내 Mattermost 추천 리스트 확인
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
 
-### `assets`
+### IntelliJ 기본 설정 (`파일 (File)` -> `설정 (Settings)`)
+#### 에디터 설정 (`에디터 (Editor)` -> `일반 (General)`)
+- `모든 저장된 파일이 줄 바꿈으로 끝나도록 함 (Ensure line feed at file end on Save)` 활성화
 
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
+#### 저장 설정 (`도구 (Tools)` -> `저장 시 액션 (Actions on Save)`)
+- `eslint --fix 실행` 활성화
+- `Prettier 실행` 활성화
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
 
-### `components`
+### WebStorm 추가 설정
+#### IDE 메모리 설정 (`도움말 (Help)` -> `메모리 설정 변경 (Change Memory Settings)`)
+또는 Jetbrains Toolbox 내 WebStorm 설정에서도 변경 가능
+- 개인 IDE 사용 패턴 및 PC 사양에 따라 적절히 설정
 
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
+## 프로젝트 실행
+### 개발모드 실행 (핫 리로드)
+```bash
+yarn dev
+```
 
-### `layouts`
+### 전체 테스트 실행
+```bash
+yarn test
+```
 
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
+### 프로덕션용 빌드 및 서버 실행
+```bash
+yarn build
+yarn start
+```
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+### 정적 프로젝트 생성
+```bash
+yarn generate
+```
