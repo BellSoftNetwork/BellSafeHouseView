@@ -4,8 +4,8 @@ include:
 
 .build:
   stage: build
-#  needs:
-#    - test
+  needs:
+    - test
   rules:
     - if: "$TEST_DISABLED || $BUILD_DISABLED"
       when: never

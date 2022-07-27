@@ -29,7 +29,7 @@ stages:
 
 include:
   - local: /.gitlab/ci/jobs/templates/default.gitlab-ci.yaml # 공통 구성요소 템플릿
-#  - local: /.gitlab/ci/jobs/test.gitlab-ci.yaml
+  - local: /.gitlab/ci/jobs/test.gitlab-ci.yaml
   - local: /.gitlab/ci/jobs/build.gitlab-ci.yaml
   - local: /.gitlab/ci/jobs/review.gitlab-ci.yaml
   - local: /.gitlab/ci/jobs/staging.gitlab-ci.yaml
