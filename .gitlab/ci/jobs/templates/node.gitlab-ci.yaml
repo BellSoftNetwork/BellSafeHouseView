@@ -13,8 +13,11 @@
     - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
     - yarn install --frozen-lockfile --no-progress
   cache:
-    key:
-      files:
-        - yarn.lock
-    paths:
-      - ${YARN_CACHE_DIR}/
+    - key:
+        files:
+          - yarn.lock
+      paths:
+        - ${YARN_CACHE_DIR}/
+    - key: $CI_COMMIT_REF_SLUG
+      paths:
+        - node_modules/
