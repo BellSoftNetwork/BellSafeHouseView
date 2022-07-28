@@ -14,23 +14,31 @@ include:
     - if: "$CI_COMMIT_REF_NAME"
       when: manual
 
+generate_nuxt_app:
+  extends:
+    - .build
+    - .node_yarn_cache
+  script:
+    - yarn generate
+  artifacts:
+    name: nuxt_dist
+    paths:
+      - dist/
+
 build_boot_image:
   image: docker
   extends:
     - .build
     - .docker
+  needs:
+    - generate_nuxt_app
   variables:
     APPLICATION_IMAGE_URL: "${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}"
-    BUILD_STAGE_IMAGE_TAG_URL: "${CI_REGISTRY_IMAGE}/build-stage:${CI_COMMIT_SHA}"
     DOCKER_BUILD_DOCKERFILE_ARGS: "-f Dockerfile.production"
-    DOCKER_BUILD_CACHE_ARGS: "--cache-from ${APPLICATION_IMAGE_URL}:${CI_COMMIT_SHA} --cache-from ${BUILD_STAGE_IMAGE_TAG_URL}"
+    DOCKER_BUILD_CACHE_ARGS: "--cache-from ${APPLICATION_IMAGE_URL}:${CI_COMMIT_SHA}"
     DOCKER_BUILD_TAG_ARGS: "-t ${APPLICATION_IMAGE_URL}:latest -t ${APPLICATION_IMAGE_URL}:${CI_COMMIT_SHA}"
   script:
-    # Build Stage
-    - docker pull ${BUILD_STAGE_IMAGE_TAG_URL} || true
-    - docker build ${DOCKER_BUILD_DOCKERFILE_ARGS} --target build-stage --cache-from ${BUILD_STAGE_IMAGE_TAG_URL} --tag ${BUILD_STAGE_IMAGE_TAG_URL} .
-    - docker push ${BUILD_STAGE_IMAGE_TAG_URL}
-    # Build application
+    - cp .dockerignore.production .dockerignore
     - docker pull ${APPLICATION_IMAGE_URL}:${CI_COMMIT_SHA} || true
     - docker build ${DOCKER_BUILD_DOCKERFILE_ARGS} ${DOCKER_BUILD_CACHE_ARGS} ${DOCKER_BUILD_TAG_ARGS} .
     - docker push -a ${APPLICATION_IMAGE_URL}
