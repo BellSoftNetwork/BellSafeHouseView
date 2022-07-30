@@ -22,6 +22,7 @@ deploy_staging:
     APPLICATION_URL: staging.${KUBE_INGRESS_BASE_DOMAIN}
     APPLICATION_NAMESPACE: ${KUBE_STAGING_NAMESPACE}
     KUBERNETES_RESOURCE_PATH: ${CI_PROJECT_DIR}/kubernetes
+    CERT_MANAGER_CLUSTER_ISSUER: "letsencrypt-prod"
   environment:
     name: staging
     url: https://${APPLICATION_URL}
