@@ -21,7 +21,14 @@ test:
     - .node_yarn_cache
   script:
     - yarn lint
-    - yarn test
+    - yarn test --ci --reporters=default --reporters=jest-junit
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+      junit:
+        - junit.xml
 
 code_quality:
   extends:
