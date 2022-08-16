@@ -21,8 +21,8 @@ deploy_production:
   variables:
     APPLICATION_URL: ${KUBE_INGRESS_BASE_DOMAIN}
     APPLICATION_NAMESPACE: ${KUBE_PRODUCTION_NAMESPACE}
-    KUBERNETES_RESOURCE_PATH: ${CI_PROJECT_DIR}/kubernetes
     CERT_MANAGER_CLUSTER_ISSUER: "letsencrypt-prod"
+    DEPLOY_ENVIRONMENT: "production"
   environment:
     name: production
     url: https://${APPLICATION_URL}

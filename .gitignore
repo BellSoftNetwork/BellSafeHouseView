@@ -2,6 +2,9 @@
 
 junit.xml
 
+.kubernetes/
+!.kubernetes/.gitkeep
+
 ### Node template
 # Logs
 /logs

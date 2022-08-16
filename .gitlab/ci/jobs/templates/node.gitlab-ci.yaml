@@ -8,10 +8,11 @@
     - .node
   variables:
     YARN_CACHE_DIR: .yarn-cache
+    YARN_NODE_ENV: development
   before_script:
     - echo 'yarn-offline-mirror "${YARN_CACHE_DIR}"' >> .yarnrc
     - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
-    - yarn install --frozen-lockfile --no-progress
+    - NODE_ENV=${YARN_NODE_ENV} yarn install --frozen-lockfile --no-progress
   cache:
     - key:
         files:

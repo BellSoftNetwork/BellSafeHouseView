@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${APPLICATION_VIEW_DEPLOYMENT_NAME}
+  namespace: ${PROJECT_NAMESPACE}
+  annotations:
+    bellsoft.net/application: ${PROJECT_NAME}
+    bellsoft.net/environment: ${APPLICATION_VIEW_ENVIRONMENT}
+  labels:
+    app: ${PROJECT_NAME}
+    env: ${APPLICATION_VIEW_ENVIRONMENT}
+    type: view
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${PROJECT_NAME}
+      env: ${APPLICATION_VIEW_ENVIRONMENT}
+      type: view
+  template:
+    metadata:
+      labels:
+        app: ${PROJECT_NAME}
+        env: ${APPLICATION_VIEW_ENVIRONMENT}
+        type: view
+      annotations:
+        bellsoft.net/application: ${PROJECT_NAME}
+        bellsoft.net/environment: ${APPLICATION_VIEW_ENVIRONMENT}
+    spec:
+      initContainers:
+        - name: init-install
+          image: ${APPLICATION_LOCAL_IMAGE_NAME}
+          imagePullPolicy: Never
+          command: [ "/bin/sh", "-c", "./scripts/docker/entrypoint-init.sh" ]
+          volumeMounts:
+            - mountPath: /home/node/project
+              name: project-root
+      containers:
+        - name: dev-run
+          image: ${APPLICATION_LOCAL_IMAGE_NAME}
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - mountPath: /home/node/project
+              name: project-root
+      volumes:
+        - name: project-root
+          hostPath:
+            path: ${KUBERNETES_HOST_SOURCE_MOUNT_PATH}

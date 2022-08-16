@@ -21,7 +21,8 @@ deploy_review:
   variables:
     APPLICATION_URL: review-${CI_COMMIT_REF_SLUG}.${KUBE_INGRESS_BASE_DOMAIN}
     APPLICATION_NAMESPACE: ${KUBE_NAMESPACE}
-    KUBERNETES_RESOURCE_PATH: ${CI_PROJECT_DIR}/kubernetes
+    APPLICATION_API_ENVIRONMENT: "development"
+    DEPLOY_ENVIRONMENT: "review"
   environment:
     name: review/${CI_COMMIT_REF_SLUG}
     url: https://${APPLICATION_URL}

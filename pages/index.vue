@@ -1,8 +1,13 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
+      <h1>{{ dummy }}</h1>
+      <p>API response: {{ indexResponse }}</p>
+      <p>
+        Current api environment: <strong>{{ apiEnvironment }}</strong>
+      </p>
+
       <v-card class="logo py-4 d-flex justify-center">
-        <h1>{{ dummy }}</h1>
         <NuxtLogo />
         <VuetifyLogo />
       </v-card>
@@ -58,6 +63,40 @@ export default {
 
   data: () => ({
     dummy: '커버리지 테스트!!',
+    indexResponse: 'not loaded',
+    apiEnvironment: 'not loaded',
   }),
+
+  mounted() {
+    this.loadIndexAPI();
+    this.loadAPIEnvironment();
+  },
+
+  methods: {
+    loadIndexAPI() {
+      this.indexResponse = 'loading..';
+
+      this.$axios
+        .$get('/api/')
+        .then((response) => {
+          this.indexResponse = response;
+        })
+        .catch((error) => {
+          this.indexResponse = `에러: ${error}`;
+        });
+    },
+    loadAPIEnvironment() {
+      this.apiEnvironment = 'loading..';
+
+      this.$axios
+        .$get('/api/environment')
+        .then((response) => {
+          this.apiEnvironment = response;
+        })
+        .catch((error) => {
+          this.apiEnvironment = `에러: ${error}`;
+        });
+    },
+  },
 };
 </script>

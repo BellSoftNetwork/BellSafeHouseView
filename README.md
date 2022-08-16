@@ -9,24 +9,14 @@ yarn install
 ```
 
 
-### IntelliJ 필수 플러그인 설치
+### WebStorm 필수 플러그인 설치
 - `Prettier`
-  이외 추가 플러그인은 팀 내 Mattermost 추천 리스트 확인
+  이외 추가 플러그인은 BSN 위키 내 [JetBrains IDE 추천 플러그인](https://wiki.bellsoft.net/ko/dev-1-team/development-environment-settings/tip/jetbrains-ide/recommended-plugins) 문서 참고
 
 
-### IntelliJ 기본 설정 (`파일 (File)` -> `설정 (Settings)`)
-#### 에디터 설정 (`에디터 (Editor)` -> `일반 (General)`)
-- `모든 저장된 파일이 줄 바꿈으로 끝나도록 함 (Ensure line feed at file end on Save)` 활성화
+### WebStorm 설정
+BSN 위키 내 [WebStorm 기본 설정](https://wiki.bellsoft.net/ko/dev-1-team/development-environment-settings/tip/jetbrains-ide/webstorm-basic-settings) 문서 참고
 
-#### 저장 설정 (`도구 (Tools)` -> `저장 시 액션 (Actions on Save)`)
-- `eslint --fix 실행` 활성화
-- `Prettier 실행` 활성화
-
-
-### WebStorm 추가 설정
-#### IDE 메모리 설정 (`도움말 (Help)` -> `메모리 설정 변경 (Change Memory Settings)`)
-또는 Jetbrains Toolbox 내 WebStorm 설정에서도 변경 가능
-- 개인 IDE 사용 패턴 및 PC 사양에 따라 적절히 설정
 
 
 ## 프로젝트 실행

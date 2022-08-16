@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${APPLICATION_API_DEPLOYMENT_NAME}
+  namespace: ${PROJECT_NAMESPACE}
+  annotations:
+    bellsoft.net/application: ${PROJECT_NAME}
+    bellsoft.net/environment: ${APPLICATION_API_ENVIRONMENT}
+  labels:
+    app: ${PROJECT_NAME}
+    env: ${APPLICATION_API_ENVIRONMENT}
+    type: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${PROJECT_NAME}
+      env: ${APPLICATION_API_ENVIRONMENT}
+      type: api
+  template:
+    metadata:
+      labels:
+        app: ${PROJECT_NAME}
+        env: ${APPLICATION_API_ENVIRONMENT}
+        type: api
+      annotations:
+        bellsoft.net/application: ${PROJECT_NAME}
+        bellsoft.net/environment: ${APPLICATION_API_ENVIRONMENT}
+    spec:
+      containers:
+        - name: ${APPLICATION_API_NAME}
+          image: ${APPLICATION_API_LATEST_IMAGE_URL}
+          imagePullPolicy: Always
+          env:
+            - name: DATABASE_MYSQL_HOST
+              value: ${DATABASE_MYSQL_SERVICE_NAME}
+            - name: DATABASE_USER
+              value: ${DATABASE_MYSQL_APP_USER}
+            - name: DATABASE_PASSWORD
+              value: ${DATABASE_MYSQL_APP_PASSWORD}
+            - name: DATABASE_SCHEMA
+              value: ${DATABASE_MYSQL_APP_DATABASE}
+          ports:
+            - containerPort: 8080

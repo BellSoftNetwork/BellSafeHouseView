@@ -45,6 +45,9 @@ export default {
     baseURL: '/',
   },
 
+  // Axios Proxy 설정: https://axios.nuxtjs.org/options/#proxy (이 설정은 nuxt generate 를 수행할 때 적용되지 않음)
+  proxy: {},
+
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
@@ -73,4 +76,10 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  // Generate Configuration: https://nuxtjs.org/docs/directory-structure/dist/
+  generate: {},
+
+  // 런타임에서 필요한 변수: https://nuxtjs.org/tutorials/moving-from-nuxtjs-dotenv-to-runtime-config/
+  publicRuntimeConfig: {},
 };

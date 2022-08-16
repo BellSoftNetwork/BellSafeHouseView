@@ -2,7 +2,7 @@ FROM nginx:stable-alpine
 
 ENV APP_HOME=.
 
-COPY $APP_HOME/dist /usr/share/nginx/html
+COPY ${APP_HOME}/dist/ /usr/share/nginx/html
 
 RUN chown nginx:nginx /usr/share/nginx/html
 

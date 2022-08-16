@@ -18,6 +18,8 @@ generate_nuxt_app:
   extends:
     - .build
     - .node_yarn_cache
+  variables:
+    NODE_ENV: "production"
   script:
     - yarn generate
   artifacts:
