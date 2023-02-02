@@ -40,5 +40,7 @@ spec:
               value: ${DATABASE_MYSQL_APP_PASSWORD}
             - name: DATABASE_MYSQL_SCHEMA
               value: ${DATABASE_MYSQL_APP_DATABASE}
+            - name: SECURITY_JWT_SIGNATURE_KEY
+              value: ${APPLICATION_API_ENV_SECURITY_JWT_SIGNATURE_KEY}
           ports:
             - containerPort: 8080
