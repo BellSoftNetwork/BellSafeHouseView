@@ -19,7 +19,8 @@ deploy_review:
     - .kubernetes_apply
     - .save_kubernetes_resources_to_artifacts
   variables:
-    APPLICATION_URL: review-${CI_COMMIT_REF_SLUG}.${KUBE_INGRESS_BASE_DOMAIN}
+    APPLICATION_URL: ${CI_COMMIT_REF_SLUG}-${KUBE_INGRESS_BASE_DOMAIN}
+    APPLICATION_TLS_SECRET_NAME: ${KUBE_INGRESS_TLS_SECRET_NAME}
     APPLICATION_NAMESPACE: ${KUBE_NAMESPACE}
     APPLICATION_API_ENVIRONMENT: "development"
     DEPLOY_ENVIRONMENT: "review"
